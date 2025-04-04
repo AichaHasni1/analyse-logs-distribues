@@ -25,8 +25,8 @@ Technologies Utilisées:
 
 5. Docker : Conteneurisation des services Elasticsearch, Logstash, Kibana et autres pour faciliter la gestion des environnements.
 
-JSON : Format de données utilisé pour structurer et échanger les logs et les configurations entre les services.
+6. JSON : Format de données utilisé pour structurer et échanger les logs et les configurations entre les services.
 
-Git : Outil de gestion de version pour permettre la collaboration entre les membres de l'équipe.
+7. Git : Outil de gestion de version pour permettre la collaboration entre les membres de l'équipe.
 
 
