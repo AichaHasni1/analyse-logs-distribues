@@ -5,7 +5,7 @@ class CustomUserCreationForm(UserCreationForm):
     password1 = forms.CharField(
         label="Password",
         strip=False,
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        widget=forms.PasswordInput(attrs={'autocomplete ': 'new-password'}),
     )
     password2 = forms.CharField(
         label="Password confirmation",
