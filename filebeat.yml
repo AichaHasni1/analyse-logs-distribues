@@ -3,8 +3,7 @@ filebeat.inputs:
   id: ssh-log-input
   enabled: true
   paths:
-  
-    - C:/Users/HP/Desktop/analyse-logs-distribues/ssh_logs.log
+   - C:\Users\user\Desktop\master fs\sysDIS\project\analyse-logs-distribues\ssh_logs.log
 
 output.logstash:
   hosts: ["localhost:5044"]

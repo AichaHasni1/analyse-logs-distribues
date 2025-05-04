@@ -1,7 +1,7 @@
 import time
 import random
 
-log_file = "C:/Users/HP/Desktop/analyse-logs-distribues/ssh_logs.log"
+log_file = "C:/Users/user/Desktop/master fs/sysDIS/project/analyse-logs-distribues/ssh_logs.log"
 
 ips = ["192.168.1.1", "10.0.0.1", "172.16.0.5", "8.8.8.8"]
 statuses = ["Accepted", "Failed", "Invalid user"]
