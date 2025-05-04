@@ -26,4 +26,4 @@ for file in files:
     with open(file, 'w') as f:
         f.write("")  # fichier vide
 
-print("✅ Structure du projet créée avec succès!!!")
+print(" Structure du projet créée avec succès!!!")

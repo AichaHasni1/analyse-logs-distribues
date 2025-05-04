@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\HP\Desktop\analyse-logs-distribues\env
+set VIRTUAL_ENV=E:\ADIA\S8\systémes répartis et distribués\PROJET\analyse-logs-distribues\env
 
 if not defined PROMPT set PROMPT=$P$G
 
