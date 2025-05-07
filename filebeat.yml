@@ -1,10 +1,11 @@
 filebeat.inputs:
-- type: filestream
-  id: ssh-log-input
-  enabled: true
-  paths:
-   - C:\Users\user\Desktop\master fs\sysDIS\project\analyse-logs-distribues\ssh_logs.log
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/ssh_logs/*.log
 
 output.logstash:
-  hosts: ["localhost:5044"]
-  
+  hosts: ["logstash:5044"]
+
+setup.kibana:
+  host: "kibana:5601"
