@@ -3,7 +3,7 @@ filebeat.inputs:
     enabled: true
     paths:
       - /var/log/ssh_logs/*.log
-
+    scan_frequency: 10s
 output.logstash:
   hosts: ["logstash:5044"]
 
