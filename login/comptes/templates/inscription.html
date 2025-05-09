@@ -1,28 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription</title>
-</head>
-<body>
-    <div class="container">
-        <div class="container">
-            <div class="form">
-                <form method="post" action="{% url 'inscription' %}">
-                    {% csrf_token %}
-                    <h1>Inscription</h1>
-                    {{ form.as_p }}    
-                    <button type="submit">S'inscrire</button>
-                </form>
-                <p class="link">Déjà inscrit ? <a href="{% url 'connexion' %}">Se connecter</a></p>
-            </div>
-        </div>      
-    </div>
+    <title>📝 Inscription</title>
     <style>
-        /* CSS */
-        /* Import Google font - Poppins */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
         * {
             margin: 0;
@@ -31,90 +14,123 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        h1 {
-            margin: 20px 0;
-        }
-
         body {
             min-height: 100vh;
             width: 100%;
-            background: #009579;
+            background: linear-gradient(135deg, #2ecc71, #34495e); /* Dégradé vert et bleu foncé */
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .container {
             width: 400px;
-            background: #fff;
-            border-radius: 7px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15); /* Fond semi-transparent */
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .container .form {
+        .form {
             padding: 30px;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2ecc71; /* Couleur verte pour le titre */
         }
 
         label {
-            padding: 10px 0;
-            color: #009579;
-            cursor: pointer;
+            display: block;
+            margin: 10px 0 5px;
+            color: #f1f1f1;
         }
 
         input {
             width: 100%;
-            padding: 10px;
-            font-size: 17px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            outline: none;
-            margin-bottom: 15px;
-            margin-top: 10px;
-        }
-
-        a {
+            padding: 12px;
             font-size: 16px;
-            color: #009579;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background-color: #ecf0f1; /* Gris clair pour les champs */
+            color: #2c3e50;
         }
 
         button {
-            color: #fff;
-            background: #009579;
             width: 100%;
-            padding: 10px;
-            font-size: 17px;
-            margin-top: 10px;
+            padding: 12px;
+            background-color: #2ecc71; /* Vert dynamique pour le bouton */
             border: none;
-            border-radius: 6px;
-            outline: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         button:hover {
-            background: #006653;
+            background-color: #16a085; /* Vert plus clair au survol */
+            transform: scale(1.03);
         }
 
         .link {
             text-align: center;
             margin-top: 20px;
+            font-size: 14px;
         }
+
+        .link a {
+            color: #1abc9c;
+            text-decoration: none;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
         .error {
-            background-color: red;
+            background-color: #e74c3c;
             color: #fff;
             border-radius: 6px;
             padding: 10px;
             margin-bottom: 10px;
-            font-size: 14px;      
-            text-align: center; 
+            font-size: 14px;
+            text-align: center;
         }
+
         ul {
             list-style: none;
             color: red;
+            padding-left: 0;
+            font-size: 14px;
         }
     </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form">
+            <h1>📝 Bienvenue !</h1>
+            <p style="text-align:center; color:#f1f1f1; margin-bottom: 15px;">Créer un compte pour accéder au dashboard 📊</p>
+
+            {% if form.errors %}
+            <div class="error">
+                Veuillez corriger les erreurs ci-dessous :
+                {{ form.errors }}
+            </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'inscription' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">S'inscrire</button>
+            </form>
+
+            <p class="link">Déjà inscrit ? <a href="{% url 'connexion' %}">Se connecter ici </a></p>
+        </div>
+    </div>
 </body>
 </html>

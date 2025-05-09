@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard pour l'analyse de logs distribués avec Elasticsearch et Kibana.">
+    <title>Analyse des Logs Distribués - Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: #ecf0f1;
+            color: #2c3e50;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #2ecc71;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .navbar h1 {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-icons a {
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-icons a:hover {
+            opacity: 0.7;
+        }
+
+        main.content {
+            padding: 90px 30px 30px; /* espace pour navbar */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 30px 0;
+            color: #1abc9c;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            color: #7f8c8d;
+            max-width: 900px;
+        }
+
+        .stats-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            margin: 40px 0;
+            padding: 0 20px;
+        }
+
+        .stat-card {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+            min-width: 250px;
+            max-width: 320px;
+            flex: 1 1 250px;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card p {
+            font-size: 1.3rem;
+            color: #34495e;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .stat-card strong {
+            font-size: 2rem;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .total {
+            background-color: #2c80b4;
+        }
+
+        .failed {
+            background-color: #e74c3c;
+        }
+
+        .accepted {
+            background-color: #2ecc71;
+        }
+
+        .users {
+            background-color: #f39c12;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .link-button {
+            background-color: #1abc9c;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .link-button:hover {
+            background-color: #16a085;
+            transform: scale(1.05);
+        }
+
+        footer.footer {
+            margin-top: 60px;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+
+        footer.footer a {
+            color: #1abc9c;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .stats-container {
+                padding: 0 10px;
+            }
+
+            .navbar h1 {
+                font-size: 1.3rem;
+            }
+
+            .nav-icons a {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>Analyse des Logs</h1>
+        <div class="nav-icons">
+            <a href="http://localhost:5601" title="Ouvrir Kibana" target="_blank" aria-label="Ouvrir Kibana">Accéderà  Kibana</a>
+            <a href="{% url 'deconnexion' %}" title="Déconnexion" aria-label="Déconnexion">Déconnexion</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content">
+        <h2>📊 Analyse des Logs Distribués</h2>
+        <p class="description">
+            Ce projet permet de simuler et analyser des logs SSH provenant de systèmes distribués. 
+            Les logs générés sont envoyés vers <strong>Logstash</strong>, indexés dans <strong>Elasticsearch</strong>, 
+            puis visualisés en temps réel via <strong>Kibana</strong>. Utilisez cette interface pour générer automatiquement des logs 
+            et accéder directement aux tableaux de bord dans Kibana pour un suivi optimal.
+        </p>
+
+        <!-- Statistiques des Logs -->
+        <div class="stats-container">
+            <div class="stat-card total">
+                <p>Total des lignes de logs</p>
+                <strong>{{ stats.total }}</strong>
+            </div>
+            <div class="stat-card failed">
+                <p>Connexions échouées</p>
+                <strong>{{ stats.failed }}</strong>
+            </div>
+            <div class="stat-card accepted">
+                <p>Connexions acceptées</p>
+                <strong>{{ stats.accepted }}</strong>
+            </div>
+            <div class="stat-card users">
+                <p>Utilisateurs différents</p>
+                <strong>{{ stats.users }}</strong>
+            </div>
+        </div>
+
+        <!-- Boutons si besoin -->
+       
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        © 2025 — Projet de Systèmes Répartis — Groupe 5 — Aicha Hasni et collègues.
+        <br> <a href="mailto:hasniaicha2@gmail.com">Contact</a>
+    </footer>
+
+</body>
+</html>
