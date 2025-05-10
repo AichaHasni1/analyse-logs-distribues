@@ -3,133 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📝 Inscription</title>
+    <title>📝 Inscription - Analyse des Logs Distribués</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #3498db;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
         }
 
         body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            display: flex;
+            flex-direction: column;
             min-height: 100vh;
-            width: 100%;
-            background: linear-gradient(135deg, #2ecc71, #34495e); /* Dégradé vert et bleu foncé */
+        }
+
+        /* Navbar identique au dashboard */
+        .navbar {
+            background-color: var(--dark-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar h1 {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        /* Contenu centré pour la page d'inscription */
+        .register-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            flex: 1;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(52, 152, 219, 0.1));
         }
 
-        .container {
-            width: 400px;
-            background: rgba(255, 255, 255, 0.15); /* Fond semi-transparent */
+        .register-box {
+            background: white;
+            padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .form {
-            padding: 30px;
-            color: #fff;
-        }
-
-        h1 {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
             text-align: center;
-            margin-bottom: 20px;
-            color: #2ecc71; /* Couleur verte pour le titre */
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .register-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .register-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .register-subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1rem;
         }
 
         label {
             display: block;
-            margin: 10px 0 5px;
-            color: #f1f1f1;
+            margin: 20px 0 8px;
+            color: var(--dark-color);
+            font-weight: 600;
+            text-align: left;
+            font-size: 0.95rem;
         }
 
-        input {
+        input, select {
             width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            border: none;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
             border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+        }
+
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0 15px;
+            color: var(--danger-color);
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .errorlist li {
+            margin-bottom: 5px;
+            padding-left: 10px;
+            border-left: 3px solid var(--danger-color);
+        }
+
+        .form-group {
             margin-bottom: 15px;
-            background-color: #ecf0f1; /* Gris clair pour les champs */
-            color: #2c3e50;
         }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #2ecc71; /* Vert dynamique pour le bouton */
-            border: none;
-            border-radius: 8px;
+        .register-button {
+            background-color: var(--primary-color);
             color: white;
-            font-size: 16px;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        button:hover {
-            background-color: #16a085; /* Vert plus clair au survol */
-            transform: scale(1.03);
-        }
-
-        .link {
-            text-align: center;
+            transition: all 0.3s ease;
+            width: 100%;
             margin-top: 20px;
-            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
         }
 
-        .link a {
-            color: #1abc9c;
+        .register-button:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+        }
+
+        .register-footer {
+            margin-top: 25px;
+            font-size: 0.95rem;
+            color: #7f8c8d;
+        }
+
+        .register-footer a {
+            color: var(--secondary-color);
             text-decoration: none;
+            font-weight: 600;
         }
 
-        .link a:hover {
+        .register-footer a:hover {
             text-decoration: underline;
         }
 
-        .error {
-            background-color: #e74c3c;
-            color: #fff;
-            border-radius: 6px;
-            padding: 10px;
-            margin-bottom: 10px;
-            font-size: 14px;
-            text-align: center;
+        /* Icônes dans les labels */
+        .input-icon {
+            margin-right: 8px;
+            color: var(--primary-color);
         }
 
-        ul {
-            list-style: none;
-            color: red;
-            padding-left: 0;
-            font-size: 14px;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .register-box {
+                padding: 30px 20px;
+            }
+            
+            .register-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .navbar h1 {
+                margin-bottom: 15px;
+            }
+            
+            .register-box {
+                padding: 25px 15px;
+                margin: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="form">
-            <h1>📝 Bienvenue !</h1>
-            <p style="text-align:center; color:#f1f1f1; margin-bottom: 15px;">Créer un compte pour accéder au dashboard 📊</p>
+    <!-- Navbar identique au dashboard -->
+    <div class="navbar">
+        <h1>Analyse des Logs</h1>
+    </div>
+
+    <!-- Contenu d'inscription -->
+    <div class="register-container">
+        <div class="register-box">
+            <h1 class="register-title">Créer un compte</h1>
+            <p class="register-subtitle">Accédez au dashboard d'analyse des logs distribués</p>
 
             {% if form.errors %}
-            <div class="error">
-                Veuillez corriger les erreurs ci-dessous :
-                {{ form.errors }}
+            <div class="form-group">
+                <ul class="errorlist">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
             </div>
             {% endif %}
 
             <form method="post" action="{% url 'inscription' %}">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">S'inscrire</button>
+                
+                <div class="form-group">
+                    <label for="id_username"><span class="input-icon"></span>Nom d'utilisateur</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.username.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_password1"><span class="input-icon"></span>Mot de passe</label>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.password1.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_password2"><span class="input-icon"></span>Confirmation du mot de passe</label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.password2.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                
+                <button type="submit" class="register-button">S'inscrire</button>
             </form>
 
-            <p class="link">Déjà inscrit ? <a href="{% url 'connexion' %}">Se connecter ici </a></p>
+            <p class="register-footer">Déjà un compte ? <a href="{% url 'connexion' %}">Connectez-vous ici</a></p>
         </div>
     </div>
 </body>

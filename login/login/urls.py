@@ -7,7 +7,11 @@ urlpatterns = [
     
     path('', views.inscription, name='inscription'),
     path('connexion/', views.connexion, name='connexion'),
-    path('acceuil/', views.acceuil, name='acceuil'),
+  
     path('deconnexion/', views.deconnexion, name='deconnexion'),  # Utilisez la vue de déconnexion personnalisée
     path('dashboard/', views.dashboard_view, name='dashboard'),
+    path('telecharger/', views.telecharger_logs, name='telecharger_logs'),
+    path('logs/', views.consulter_logs, name='consulter_logs'),
+
+
 ]
