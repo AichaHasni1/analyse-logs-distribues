@@ -31,6 +31,12 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
         .navbar h1 {
             color: white;
             font-size: 1.5rem;
@@ -42,7 +48,7 @@
             gap: 15px;
         }
 
-        .nav-icons a {
+        .nav-icons a, .nav-icons button {
             background-color: #ffffff22;
             padding: 8px 16px;
             border-radius: 20px;
@@ -54,11 +60,53 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            border: none;
+            cursor: pointer;
         }
 
-        .nav-icons a:hover {
+        .nav-icons a:hover, .nav-icons button:hover {
             background-color: #3498db;
             transform: translateY(-2px);
+        }
+
+        /* Style pour le menu déroulant */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #34495e;
+            min-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            margin-top: 5px;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            border-radius: 0;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #2c3e50;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-toggle::after {
+            content: " ▼";
+            font-size: 0.7em;
         }
 
         main.content {
@@ -99,13 +147,12 @@
 
         /* Conteneur global pour les cartes */
         .stats-container {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 25px;
-            justify-content: center;
             width: 100%;
-            margin: 0 auto;
             max-width: 1200px;
+            margin: 0 auto;
         }
 
         /* Style de base pour toutes les cartes */
@@ -116,9 +163,6 @@
             text-align: left;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
-            flex: 1 1 250px;
-            min-width: 250px;
-            max-width: 300px;
             border-top: 4px solid transparent;
             position: relative;
             overflow: hidden;
@@ -274,13 +318,6 @@
             text-align: right;
         }
 
-        /* Graphique */
-        .chart-container {
-            width: 100%;
-            height: 200px;
-            margin-top: 15px;
-        }
-
         /* Boutons */
         .button-container {
             display: flex;
@@ -327,14 +364,62 @@
             font-weight: 600;
         }
 
+        /* Modale */
+        #filesModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            padding: 50px;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #ndjsonFilesList {
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+
+        .file-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .download-btn {
+            padding: 5px 10px;
+            background: #3498db;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .close-modal {
+            padding: 8px 16px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
         /* Responsive */
-        @media (max-width: 992px) {
+        @media (max-width: 1200px) {
             .stats-container {
-                gap: 20px;
-            }
-            
-            .stat-card {
-                flex: 1 1 45%;
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -344,7 +429,7 @@
                 padding: 15px;
             }
             
-            .navbar h1 {
+            .navbar-brand {
                 margin-bottom: 15px;
             }
             
@@ -354,9 +439,19 @@
                 flex-wrap: wrap;
             }
             
-            .nav-icons a {
+            .nav-icons a, .nav-icons button {
                 font-size: 0.8rem;
                 padding: 6px 12px;
+            }
+            
+            .dropdown {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .dropdown-content {
+                width: 100%;
+                right: auto;
             }
             
             main.content {
@@ -370,14 +465,13 @@
             .description {
                 font-size: 1rem;
             }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 576px) {
-            .stat-card {
-                flex: 1 1 100%;
-                max-width: 100%;
-            }
-            
             .button-container {
                 flex-direction: column;
                 gap: 15px;
@@ -393,13 +487,24 @@
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <h1>Analyse des Logs</h1>
+        <div class="navbar-brand">
+            <h1>Analyse des Logs</h1>
+        </div>
         <div class="nav-icons">
-            
-            <a href="{% url 'telecharger_logs' %}">Télécharger</a>
+            <button id="selectAllNdjson">📁 Sélectionner tous les .ndjson</button>
+            <a href="{% url 'telecharger_logs' %}">Fichiers de logs</a>
             <a href="{% url 'consulter_logs' %}"> Rechercher</a>
-            <a href="http://localhost:5601">📊 Kibana</a>
+            <a href="http://localhost:5601" target="_blank">📊 Kibana</a>
             <a href="{% url 'deconnexion' %}"> Déconnexion</a>
+        </div>
+    </div>
+
+    <!-- Modale pour les fichiers NDJSON -->
+    <div id="filesModal">
+        <div class="modal-content">
+            <h3>Fichiers .ndjson disponibles</h3>
+            <div id="ndjsonFilesList"></div>
+            <button class="close-modal" onclick="document.getElementById('filesModal').style.display='none'">Fermer</button>
         </div>
     </div>
 
@@ -415,148 +520,68 @@
 
         <!-- Statistiques des Logs -->
         <div class="stats-container">
-            <!-- Cartes principales redessinées -->
+            <!-- Première ligne de 4 cartes -->
             <div class="stat-card total">
                 <div class="card-icon">📊</div>
                 <p>Total des logs</p>
-                <strong>682</strong>
+                <strong>{{ stats.total_logs }}</strong>
                 <div class="metric-description">Lignes analysées</div>
             </div>
             
             <div class="stat-card failed">
                 <div class="card-icon">⚠️</div>
                 <p>Connexions échouées</p>
-                <strong>331</strong>
+                <strong>{{ stats.failed_logins }}</strong>
                 <div class="progress-container">
-                    <div class="progress-bar" style="width: 48.5%"></div>
+                    <div class="progress-bar" style="width: {{ stats.error_rate }}%"></div>
                 </div>
             </div>
             
             <div class="stat-card accepted">
                 <div class="card-icon">✅</div>
                 <p>Connexions acceptées</p>
-                <strong>340</strong>
+                <strong>{{ stats.accepted_logins }}</strong>
                 <div class="metric-description">Authentifications réussies</div>
             </div>
             
             <div class="stat-card users">
                 <div class="card-icon">👥</div>
                 <p>Utilisateurs uniques</p>
-                <strong>36</strong>
+                <strong>{{ stats.unique_users }}</strong>
                 <div class="metric-description">Comptes distincts</div>
             </div>
 
-            <!-- Graphique Logs par Heure -->
-            <div class="stat-card">
-                <p>Activité horaire</p>
-                <div class="chart-container">
-                    <canvas id="logsPerHourChart"></canvas>
-                </div>
-                <div class="metric-description">Distribution sur 24h</div>
-            </div>
-
-            <!-- Cartes supplémentaires -->
+            <!-- Deuxième ligne de 4 cartes -->
             <div class="stat-card error-rate">
                 <div class="card-icon">📉</div>
                 <p>Taux d'erreur</p>
-                <strong>49.33%</strong>
+                <strong>{{ stats.error_rate|floatformat:2 }}%</strong>
                 <div class="progress-container">
-                    <div class="progress-bar" style="width: 49.33%"></div>
+                    <div class="progress-bar" style="width: {{ stats.error_rate }}%"></div>
                 </div>
             </div>
 
             <div class="stat-card avg-logs-per-user">
                 <div class="card-icon">🧮</div>
                 <p>Moyenne logs/utilisateur</p>
-                <strong>18.64</strong>
+                <strong>{{ stats.avg_logs_per_user|floatformat:2 }}</strong>
                 <div class="metric-description">Activité moyenne par compte</div>
             </div>
 
             <div class="stat-card most-frequent-error">
                 <div class="card-icon">🔍</div>
                 <p>Erreur fréquente</p>
-                <span class="error-text">Accepted password</span>
+                <span class="error-text">{{ stats.most_common_error }}</span>
                 <div class="metric-description">Message le plus répété</div>
             </div>
 
             <div class="stat-card last-log">
                 <div class="card-icon">🕒</div>
                 <p>Dernière activité</p>
-                <div class="log-entry">May 4 14:15:47 server sshd[3120]: Accepted password for Hind from 192.168.1.5</div>
-                <div class="timestamp">il y a 2 minutes</div>
+                <div class="log-entry">{{ stats.last_log|truncatechars:100 }}</div>
+                <div class="timestamp">Mis à jour à {{ stats.last_update }}</div>
             </div>
         </div>
-
-        <!-- Script Chart.js pour les Logs par Heure -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var ctx = document.getElementById('logsPerHourChart').getContext('2d');
-                var logsPerHourChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ["00h", "02h", "04h", "06h", "08h", "10h", "12h", "14h", "16h", "18h", "20h", "22h"],
-                        datasets: [{
-                            label: 'Logs par tranche horaire',
-                            data: [12, 8, 5, 10, 35, 58, 62, 68, 55, 42, 30, 18],
-                            backgroundColor: 'rgba(52, 152, 219, 0.7)',
-                            borderColor: 'rgba(52, 152, 219, 1)',
-                            borderWidth: 1,
-                            borderRadius: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false
-                            },
-                            tooltip: {
-                                mode: 'index',
-                                intersect: false
-                            }
-                        },
-                        scales: {
-                            x: {
-                                grid: {
-                                    display: false
-                                }
-                            },
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    color: 'rgba(0, 0, 0, 0.05)'
-                                }
-                            }
-                        }
-                    }
-                });
-                
-                // Animation des cartes au chargement
-                const cards = document.querySelectorAll('.stat-card');
-                cards.forEach((card, index) => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.1}s`;
-                });
-                
-                // Ajout dynamique de la keyframe
-                const style = document.createElement('style');
-                style.textContent = `
-                    @keyframes fadeInUp {
-                        from {
-                            opacity: 0;
-                            transform: translateY(20px);
-                        }
-                        to {
-                            opacity: 1;
-                            transform: translateY(0);
-                        }
-                    }
-                `;
-                document.head.appendChild(style);
-            });
-        </script>
     </main>
 
     <!-- Footer -->
@@ -564,5 +589,71 @@
         © 2025 — Projet de Systèmes Répartis — Groupe 5 — Aicha Hasni et collègues.
         <br> <a href="mailto:hasniaicha2@gmail.com">Contactez-nous</a>
     </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation des cartes au chargement
+            const cards = document.querySelectorAll('.stat-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.1}s`;
+            });
+            
+            // Ajout dynamique de la keyframe
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Gestion de la modale des fichiers NDJSON
+            document.getElementById('selectAllNdjson').addEventListener('click', function() {
+                fetch('/get_ndjson_files/')
+                    .then(response => response.json())
+                    .then(files => {
+                        const list = document.getElementById('ndjsonFilesList');
+                        list.innerHTML = '';
+                        
+                        if (files.length === 0) {
+                            list.innerHTML = '<p>Aucun fichier .ndjson trouvé dans le dossier dashboard.</p>';
+                        } else {
+                            files.forEach(file => {
+                                const fileItem = document.createElement('div');
+                                fileItem.className = 'file-item';
+                                
+                                const fileName = document.createElement('span');
+                                fileName.textContent = file;
+                                
+                                const downloadBtn = document.createElement('a');
+                                downloadBtn.href = `/download/${encodeURIComponent(file)}`;
+                                downloadBtn.className = 'download-btn';
+                                downloadBtn.textContent = 'Télécharger';
+                                
+                                fileItem.appendChild(fileName);
+                                fileItem.appendChild(downloadBtn);
+                                list.appendChild(fileItem);
+                            });
+                        }
+                        
+                        document.getElementById('filesModal').style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('Erreur:', error);
+                        alert('Une erreur est survenue lors de la récupération des fichiers.');
+                    });
+            });
+        });
+    </script>
 </body>
 </html>
