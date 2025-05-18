@@ -59,27 +59,9 @@ This project provides a complete, containerized environment to:
 [Filebeat] --> [Logstash] --> [Elasticsearch] --> [Kibana]
 
 
+👤 Author
+Hind Elqorachi
+Master’s Student – Data Analytics & AI
+Project GitHub: github.com/Hindeq/analyse-logs-distribues
 
-📊 Kibana Dashboards
-Accessible at http://localhost:5601
-
-Can be embedded in Django (via iframe)
-
-Support for saved dashboards and visualizations
-
-You can export and re-import dashboards if needed.
-
-📦 Django Interface
-
-Provides:
-Viewing analysis reports
-Download as CSV/JSON
-
-
-🛠 Optional Enhancements
-Anomaly Detection (ML) module using Python
-
-Role-based user access in Django
-
-Log tagging and alerts
 
