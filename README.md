@@ -48,13 +48,11 @@ This project provides a complete, containerized environment to:
 
 ###  Dashboards & Analysis
 - Use Kibana to explore logs and build interactive dashboards
-- Django app embeds Kibana dashboards via iframe
 - Option to download filtered logs as CSV or JSON
 
 ###  Django Web Interface
-- Submit logs via form or file
 - Visualize key metrics
-- Download logs or anomaly reports (if added later)
+- Download logs
 
 ## 📊 Kibana Dashboards
 
