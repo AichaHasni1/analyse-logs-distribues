@@ -31,6 +31,12 @@ This project provides a complete, containerized environment to:
 | **Django**         | Web UI to interact with log data            |
 | **Python**         | Backend logic, log formatting, downloads    |
 
+## Architecture
+
+ [User]
+   │
+[Filebeat] --> [Logstash] --> [Elasticsearch] --> [Kibana]
+
 
 
 ##  Features
@@ -50,18 +56,35 @@ This project provides a complete, containerized environment to:
 - Visualize key metrics
 - Download logs or anomaly reports (if added later)
 
+## 📊 Kibana Dashboards
 
-## Architecture
+- Accessible at [http://localhost:5601](http://localhost:5601)
+- Support for saved dashboards and visualizations
+- You can export and re-import dashboards if needed.
 
- [User]
-   │
-   ▼
-[Filebeat] --> [Logstash] --> [Elasticsearch] --> [Kibana]
+---
+
+## 📦 Django Interface
+
+Provides:
+- Logging interface
+- Download dashboard as .ndJSON
+- Accessing Kibana
+
+---
+
+## 🛠 Optional Enhancements
+
+- Anomaly Detection (ML) module using Python
+- Role-based user access in Django
+- Log tagging and alerts
 
 
-👤 Author
-Hind Elqorachi
-Master’s Student – Data Analytics & AI
-Project GitHub: github.com/Hindeq/analyse-logs-distribues
+## 👤 Author
+
+**Hind Elqorachi**  
+Master’s Student – Data Analytics & AI  
+Project GitHub: [github.com/Hindeq/analyse-logs-distribues](https://github.com/Hindeq/analyse-logs-distribues)
+
 
 
