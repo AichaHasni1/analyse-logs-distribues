@@ -1,32 +1,85 @@
-Description du Projet :   
-Le projet Analyse des Logs Distribués vise à analyser et visualiser les logs provenant de systèmes distribués en temps réel. L'objectif principal est de rendre ces logs facilement accessibles et exploitables en utilisant des outils comme Elasticsearch, Logstash et d'autres technologies modernes. Les logs seront stockés dans Elasticsearch, et l'équipe pourra les analyser via une interface front-end simple. Ce projet sera crucial pour la gestion des erreurs, la surveillance de la performance et la gestion des incidents dans des environnements distribués.
+# 🔍 Distributed Log Analysis System with ELK + Django Interface
 
-Objectifs du Projet
-1. Collecter et analyser les logs provenant de différents systèmes et services distribués.
+A lightweight yet powerful log analysis platform using the **ELK Stack (Elasticsearch, Logstash, Kibana)** combined with **Filebeat** for log shipping and a custom **Django web interface** for visualization, interaction, and download.
 
-2. Stocker les logs dans Elasticsearch pour faciliter la recherche et l'indexation.
+---
 
-3. Mettre en place une interface d'analyse simple et interactive pour visualiser les logs en temps réel.
+##  Overview
 
-4. Automatiser le processus d'indexation et d'analyse des logs avec l'aide de Logstash.
+This project provides a complete, containerized environment to:
+- Collect logs using **Filebeat**
+- Parse and index logs via **Logstash**
+- Store and query logs in **Elasticsearch**
+- Visualize data through **Kibana**
+- Interact with logs via a **Django application** that allows:
+  - downloading the logs file
+  - downloading the dashboards file
+  - Viewing analysis reports
+  - Filtering logs
 
-5. Assurer la scalabilité du projet afin qu'il puisse traiter une grande quantité de logs générés par des systèmes distribués.
+---
 
-6. Rendre le projet modulaire pour qu'il puisse être facilement étendu et adapté à différents types de systèmes et logs.
+##  Technologies Used
 
-Technologies Utilisées:
-1. Python : Langage de programmation utilisé pour l'analyse des logs et l'interaction avec Elasticsearch.
+| Component        | Description                                  |
+|------------------|----------------------------------------------|
+| **Docker Compose** | Orchestrates all services                   |
+| **Filebeat**       | Lightweight shipper to collect logs         |
+| **Logstash**       | Central log parser and processor            |
+| **Elasticsearch**  | Full-text search and storage engine         |
+| **Kibana**         | Log visualization and dashboarding          |
+| **Django**         | Web UI to interact with log data            |
+| **Python**         | Backend logic, log formatting, downloads    |
 
-2. Elasticsearch : Moteur de recherche et d'analyse de données utilisé pour stocker et rechercher dans les logs.
 
-3. Logstash : Outil permettant de collecter, filtrer et envoyer les logs vers Elasticsearch.
 
-4. Kibana : Outil d'analyse et de visualisation des données stockées dans Elasticsearch. Kibana offre une interface graphique pour explorer les logs et effectuer des requêtes complexes.
+##  Features
 
-5. Docker : Conteneurisation des services Elasticsearch, Logstash, Kibana et autres pour faciliter la gestion des environnements.
+###  Log Collection & Parsing
+- Collect logs from local sources (or simulated logs via Django)
+- Grok parsing of logs with custom patterns
+- Automatic timestamp recognition and enrichment
 
-6. JSON : Format de données utilisé pour structurer et échanger les logs et les configurations entre les services.
+###  Dashboards & Analysis
+- Use Kibana to explore logs and build interactive dashboards
+- Django app embeds Kibana dashboards via iframe
+- Option to download filtered logs as CSV or JSON
 
-7. Git : Outil de gestion de version pour permettre la collaboration entre les membres de l'équipe .
+###  Django Web Interface
+- Submit logs via form or file
+- Visualize key metrics
+- Download logs or anomaly reports (if added later)
 
+
+## Architecture
+
+ [User]
+   │
+   ▼
+[Filebeat] --> [Logstash] --> [Elasticsearch] --> [Kibana]
+
+
+
+📊 Kibana Dashboards
+Accessible at http://localhost:5601
+
+Can be embedded in Django (via iframe)
+
+Support for saved dashboards and visualizations
+
+You can export and re-import dashboards if needed.
+
+📦 Django Interface
+
+Provides:
+Viewing analysis reports
+Download as CSV/JSON
+
+
+🛠 Optional Enhancements
+Anomaly Detection (ML) module using Python
+
+Role-based user access in Django
+
+Log tagging and alerts
 
