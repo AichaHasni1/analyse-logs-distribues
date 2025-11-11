@@ -1,4 +1,4 @@
-Voici la **version en français**, propre, claire, prête à mettre dans ton **README.md** :
+ 
 
 ---
 
@@ -97,3 +97,4 @@ Ce projet propose un environnement complet et conteneurisé permettant de :
  
 
  
+
