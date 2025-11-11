@@ -1,88 +1,99 @@
-# 🔍 Distributed Log Analysis System with ELK + Django Interface
-
-A lightweight yet powerful log analysis platform using the **ELK Stack (Elasticsearch, Logstash, Kibana)** combined with **Filebeat** for log shipping and a custom **Django web interface** for visualization, interaction, and download.
+Voici la **version en français**, propre, claire, prête à mettre dans ton **README.md** :
 
 ---
 
-##  Overview
+# 🔍 Système Distribué d’Analyse de Logs avec ELK + Interface Django
 
-This project provides a complete, containerized environment to:
-- Collect logs using **Filebeat**
-- Parse and index logs via **Logstash**
-- Store and query logs in **Elasticsearch**
-- Visualize data through **Kibana**
-- Interact with logs via a **Django application** that allows:
-  - downloading the logs file
-  - downloading the dashboards file
-  - Viewing analysis reports
-  - Filtering logs
+Un système léger mais puissant d’analyse de logs basé sur la **stack ELK (Elasticsearch, Logstash, Kibana)** combinée avec **Filebeat** pour l’envoi des logs, ainsi qu’une **interface web développée en Django** permettant la visualisation, l’interaction et le téléchargement des données.
 
 ---
 
-##  Technologies Used
+## 📝 Aperçu
 
-| Component        | Description                                  |
-|------------------|----------------------------------------------|
-| **Docker Compose** | Orchestrates all services                   |
-| **Filebeat**       | Lightweight shipper to collect logs         |
-| **Logstash**       | Central log parser and processor            |
-| **Elasticsearch**  | Full-text search and storage engine         |
-| **Kibana**         | Log visualization and dashboarding          |
-| **Django**         | Web UI to interact with log data            |
-| **Python**         | Backend logic, log formatting, downloads    |
+Ce projet propose un environnement complet et conteneurisé permettant de :
 
-## Architecture
+* Collecter les logs avec **Filebeat**
+* Les analyser et les transformer via **Logstash**
+* Les stocker et les interroger dans **Elasticsearch**
+* Visualiser les dashboards dans **Kibana**
+* Interagir avec les logs grâce à une **application Django** permettant :
 
- [User]
-   │
-[Filebeat] --> [Logstash] --> [Elasticsearch] --> [Kibana]
-
-
-
-##  Features
-
-###  Log Collection & Parsing
-- Collect logs from local sources (or simulated logs via Django)
-- Grok parsing of logs with custom patterns
-- Automatic timestamp recognition and enrichment
-
-###  Dashboards & Analysis
-- Use Kibana to explore logs and build interactive dashboards
-- Option to download filtered logs as CSV or JSON
-
-###  Django Web Interface
-- Visualize key metrics
-- Download logs
-
-## 📊 Kibana Dashboards
-
-- Accessible at [http://localhost:5601](http://localhost:5601)
-- Support for saved dashboards and visualizations
-- You can export and re-import dashboards if needed.
+  * Le téléchargement des fichiers de logs
+  * Le téléchargement des dashboards
+  * L’affichage des rapports d’analyse
+  * Le filtrage des logs
 
 ---
 
-## 📦 Django Interface
+## 🧰 Technologies Utilisées
 
-Provides:
-- Logging interface
-- Download dashboard as .ndJSON
-- Accessing Kibana
+| Composant          | Rôle                                          |
+| ------------------ | --------------------------------------------- |
+| **Docker Compose** | Orchestration des services                    |
+| **Filebeat**       | Collecte et envoi des logs                    |
+| **Logstash**       | Parsing et traitement centralisé              |
+| **Elasticsearch**  | Stockage et moteur de recherche plein texte   |
+| **Kibana**         | Visualisation et création de tableaux de bord |
+| **Django**         | Interface web utilisateur                     |
+| **Python**         | Logique backend et gestion des exports        |
 
 ---
 
-## 🛠 Optional Enhancements
+## 🏗️ Architecture
 
-- Anomaly Detection (ML) module using Python
-- Role-based user access in Django
-- Log tagging and alerts
+```
+   [Utilisateur]
+         │
+   [Filebeat]
+         ↓
+   [Logstash]
+         ↓
+ [Elasticsearch]
+         ↓
+     [Kibana]
+```
 
+---
 
-## 👤 Author
+## ✨ Fonctionnalités
 
-**Hind Elqorachi**  
-Master’s Student – Data Analytics & AI  
-Project GitHub: [github.com/Hindeq/analyse-logs-distribues](https://github.com/Hindeq/analyse-logs-distribues)
+### 📥 Collecte & Traitement des Logs
 
+* Collecte automatique des logs système ou applicatifs
+* Parsing avec **GROK** (patterns personnalisables)
+* Ajout de métadonnées (timestamp, source, etc.)
 
+### 📊 Visualisation & Analyse
 
+* Dashboards interactifs dans **Kibana**
+* Export des logs filtrés au format **CSV / JSON**
+
+### 🌐 Interface Django
+
+* Visualisation de métriques
+* Téléchargement de logs et dashboards
+* Accès direct aux pages Kibana
+
+---
+
+## 📊 Accès à Kibana
+
+➡️ [http://localhost:5601](http://localhost:5601)
+
+* Visualisation des données
+* Création et gestion de dashboards
+* Export et import de visualisations
+
+---
+
+## 🛠️ Améliorations Possibles
+
+* Détection d’anomalies (Machine Learning)
+* Gestion des rôles et permissions (Admin / User)
+* Alertes sur conditions critiques
+
+---
+
+ 
+
+ 
